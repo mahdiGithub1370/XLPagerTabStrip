@@ -47,7 +47,7 @@ open class ButtonBarView: UICollectionView {
 
     open lazy var selectedBar: UIView = { [unowned self] in
         let bar  = UIView(frame: CGRect(x: 0, y: self.frame.size.height - CGFloat(self.selectedBarHeight), width: 0, height: CGFloat(self.selectedBarHeight)))
-        bar.layer.zPosition = 9999
+        //bar.layer.zPosition = 9999
         return bar
     }()
 
@@ -59,10 +59,14 @@ open class ButtonBarView: UICollectionView {
     var selectedBarVerticalAlignment: SelectedBarVerticalAlignment = .bottom
     var selectedBarAlignment: SelectedBarAlignment = .center
     var selectedIndex = 0
-
+    var cornerRadius: CGFloat = 0 {
+        didSet {
+            updateRadius()
+        }
+    }
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        addSubview(selectedBar)
     }
 
     public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
@@ -183,9 +187,19 @@ open class ButtonBarView: UICollectionView {
         selectedBarFrame.size.height = selectedBarHeight
         selectedBar.frame = selectedBarFrame
     }
+    
+    private func updateRadius() {
+        if cornerRadius > 0 {
+            self.clipsToBounds = true
+            self.layer.cornerRadius = cornerRadius
+            selectedBar.clipsToBounds = true
+            selectedBar.layer.cornerRadius = cornerRadius
+        }
+    }
 
     override open func layoutSubviews() {
         super.layoutSubviews()
         updateSelectedBarYPosition()
     }
 }
+
