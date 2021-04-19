@@ -69,11 +69,6 @@ public struct ButtonBarPagerTabStripSettings {
 //MARK:
 open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, PagerTabStripDataSource, PagerTabStripIsProgressiveDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
-//    open override var currentIndex: Int {
-//        didSet {
-//            updateTitlesColor()
-//        }
-//    }
     public var settings = ButtonBarPagerTabStripSettings()
     public var buttonBarItemSpec: ButtonBarItemSpec<ButtonBarViewCell>!
     public var changeCurrentIndex: ((_ oldCell: ButtonBarViewCell?, _ newCell: ButtonBarViewCell?, _ animated: Bool) -> Void)?
@@ -210,6 +205,10 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
             let cell = getCell(for: index)
             setColor(for: cell, index: index, currentIndex: currentIndex ?? self.currentIndex)
         }
+    }
+    override func indexChanged() {
+        super.indexChanged()
+        updateTitlesColor()
     }
     
     private func getCell(for index: Int) -> ButtonBarViewCell? {
