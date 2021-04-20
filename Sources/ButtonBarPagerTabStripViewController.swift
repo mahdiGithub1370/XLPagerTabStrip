@@ -176,7 +176,7 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
 
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
+        setupRTL()
         guard isViewAppearing || isViewRotating else { return }
 
         // Force the UICollectionViewFlowLayout to get laid out again with the new size if
@@ -209,6 +209,13 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
     override func indexChanged() {
         super.indexChanged()
         updateTitlesColor()
+    }
+    
+    func setupRTL() {
+        guard displayRTL else {
+            return
+        }
+        buttonBarView.semanticContentAttribute = .forceLeftToRight
     }
     
     private func getCell(for index: Int) -> ButtonBarViewCell? {

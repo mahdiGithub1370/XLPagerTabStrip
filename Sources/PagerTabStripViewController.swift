@@ -55,11 +55,15 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
 
     open weak var delegate: PagerTabStripDelegate?
     open weak var datasource: PagerTabStripDataSource?
-
+    open var displayRTL = false
     open var pagerBehaviour = PagerTabStripBehaviour.progressive(skipIntermediateViewControllers: true, elasticIndicatorLimit: true)
 
     open private(set) var viewControllers = [UIViewController]()
-    open private(set) var currentIndex = 0 {
+    private lazy var initialValueCurrentIndex: Int = {
+        let RTLindex = viewControllers.count - 1 >= 0 ? viewControllers.count - 1 : 0
+        return displayRTL ? RTLindex : 0
+    }()
+    open lazy private(set) var currentIndex = initialValueCurrentIndex {
         didSet {
             indexChanged()
         }
@@ -381,7 +385,8 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         guard let dataSource = datasource else {
             fatalError("dataSource must not be nil")
         }
-        viewControllers = dataSource.viewControllers(for: self)
+        let _viewControllers = displayRTL ? dataSource.viewControllers(for: self).reversed() : dataSource.viewControllers(for: self)
+        viewControllers = _viewControllers
         // viewControllers
         guard !viewControllers.isEmpty else {
             fatalError("viewControllers(for:) should provide at least one child view controller")
