@@ -25,11 +25,13 @@
 import UIKit
 import Foundation
 
-open class ButtonBarViewCell: UICollectionViewCell {
-
+open class ButtonBarViewCell: UICollectionViewCell, ButtonBarCellProtocol {
+    
     @IBOutlet open var imageView: UIImageView!
-    @IBOutlet open var label: UILabel!
-
+    @IBOutlet public var label: UILabel!
+    public func getLabel() -> UILabel {
+        return label
+    }
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         

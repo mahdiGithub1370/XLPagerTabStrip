@@ -47,7 +47,7 @@ public struct ButtonBarPagerTabStripSettings {
         public var buttonBarMinimumLineSpacing: CGFloat?
         public var buttonBarLeftContentInset: CGFloat?
         public var buttonBarRightContentInset: CGFloat?
-        
+        public var isRTL = false
         public var selectedBarBackgroundColor = UIColor.black
         public var selectedBarHeight: CGFloat = 5
         public var cornerRadius: CGFloat = 0
@@ -153,7 +153,7 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
         flowLayout.sectionInset = UIEdgeInsets(top: sectionInset.top, left: settings.style.buttonBarLeftContentInset ?? sectionInset.left, bottom: sectionInset.bottom, right: settings.style.buttonBarRightContentInset ?? sectionInset.right)
 
         buttonBarView.showsHorizontalScrollIndicator = false
-        buttonBarView.backgroundColor = .clear//settings.style.buttonBarBackgroundColor ?? buttonBarView.backgroundColor
+        buttonBarView.backgroundColor = settings.style.buttonBarBackgroundColor
         buttonBarView.selectedBar.backgroundColor = settings.style.selectedBarBackgroundColor
         buttonBarView.cornerRadius = settings.style.cornerRadius
         buttonBarView.selectedBarHeight = settings.style.selectedBarHeight

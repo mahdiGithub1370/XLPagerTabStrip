@@ -24,7 +24,11 @@
 
 import Foundation
 
-open class BaseButtonBarPagerTabStripViewController<ButtonBarCellType: UICollectionViewCell>: PagerTabStripViewController, PagerTabStripDataSource, PagerTabStripIsProgressiveDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+public protocol ButtonBarCellProtocol {
+    func getLabel() -> UILabel
+}
+
+open class BaseButtonBarPagerTabStripViewController<ButtonBarCellType: UICollectionViewCell & ButtonBarCellProtocol>: PagerTabStripViewController, PagerTabStripDataSource, PagerTabStripIsProgressiveDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
     public var settings = ButtonBarPagerTabStripSettings()
     public var buttonBarItemSpec: ButtonBarItemSpec<ButtonBarCellType>!
@@ -57,7 +61,7 @@ open class BaseButtonBarPagerTabStripViewController<ButtonBarCellType: UICollect
             flowLayout.sectionInset = UIEdgeInsets(top: 0, left: settings.style.buttonBarLeftContentInset ?? 35, bottom: 0, right: settings.style.buttonBarRightContentInset ?? 35)
             let buttonBarHeight = settings.style.buttonBarHeight ?? 44
             let buttonBar = ButtonBarView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: buttonBarHeight), collectionViewLayout: flowLayout)
-            buttonBar.backgroundColor = .orange
+            buttonBar.backgroundColor = .clear
             buttonBar.selectedBar.backgroundColor = .black
             buttonBar.autoresizingMask = .flexibleWidth
             var newContainerViewFrame = containerView.frame
@@ -85,7 +89,7 @@ open class BaseButtonBarPagerTabStripViewController<ButtonBarCellType: UICollect
         let sectionInset = flowLayout.sectionInset
         flowLayout.sectionInset = UIEdgeInsets(top: sectionInset.top, left: settings.style.buttonBarLeftContentInset ?? sectionInset.left, bottom: sectionInset.bottom, right: settings.style.buttonBarRightContentInset ?? sectionInset.right)
         buttonBarView.showsHorizontalScrollIndicator = false
-        buttonBarView.backgroundColor = settings.style.buttonBarBackgroundColor ?? buttonBarView.backgroundColor
+        buttonBarView.backgroundColor = settings.style.buttonBarBackgroundColor
         buttonBarView.selectedBar.backgroundColor = settings.style.selectedBarBackgroundColor
         buttonBarView.selectedBarVerticalAlignment = settings.style.selectedBarVerticalAlignment
         buttonBarView.selectedBarHeight = settings.style.selectedBarHeight
@@ -112,7 +116,7 @@ open class BaseButtonBarPagerTabStripViewController<ButtonBarCellType: UICollect
 
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
+        setupRTL()
         guard isViewAppearing || isViewRotating else { return }
 
         // Force the UICollectionViewFlowLayout to get laid out again with the new size if
@@ -133,7 +137,42 @@ open class BaseButtonBarPagerTabStripViewController<ButtonBarCellType: UICollect
         buttonBarView.moveTo(index: currentIndex, animated: false, swipeDirection: .none, pagerScroll: .scrollOnlyIfOutOfScreen)
         buttonBarView.selectItem(at: IndexPath(item: currentIndex, section: 0), animated: false, scrollPosition: [])
     }
-
+    
+    override func indexChanged() {
+        super.indexChanged()
+        updateTitlesColor()
+    }
+    
+    open func updateTitlesColor(currentIndex: Int? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            let cellsCount = self.buttonBarView.visibleCells.count
+            for index in 0..<cellsCount {
+                let cell = self.getCell(for: index)
+                self.setColor(for: cell, index: index, currentIndex: currentIndex ?? self.currentIndex)
+            }
+        }
+    }
+    
+    func setupRTL() {
+        guard displayRTL else {
+            return
+        }
+        buttonBarView.semanticContentAttribute = .forceLeftToRight
+    }
+    
+    private func getCell(for index: Int) -> ButtonBarCellType? {
+        let cell = buttonBarView.cellForItem(at: IndexPath(item: index, section: 0)) as? ButtonBarCellType
+        return cell
+    }
+    
+    private func setColor(for cell: ButtonBarCellProtocol?, index: Int, currentIndex: Int) {
+        let color: UIColor = index == currentIndex ? (settings.style.buttonBarItemSelectedTitleColor ?? .gray) : (settings.style.buttonBarItemTitleColor ?? .gray)
+        cell?.getLabel().textColor = color
+    }
+    
     // MARK: - View Rotation
 
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
