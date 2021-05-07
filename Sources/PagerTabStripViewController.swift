@@ -59,10 +59,19 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
     open var pagerBehaviour = PagerTabStripBehaviour.progressive(skipIntermediateViewControllers: true, elasticIndicatorLimit: true)
 
     open private(set) var viewControllers = [UIViewController]()
+    open var initialIndex: Int = 0
     private lazy var initialValueCurrentIndex: Int = {
-        let RTLindex = viewControllers.count - 1 >= 0 ? viewControllers.count - 1 : 0
-        return displayRTL ? RTLindex : 0
+        let _lastIndex = viewControllers.count - 1
+        let lastIndex = _lastIndex >= 0 ? _lastIndex : 0
+        guard displayRTL else {
+            let ltrIndex = initialIndex < lastIndex ? initialIndex : 0
+            return ltrIndex
+        }
+        let _rtlIndex = lastIndex - initialIndex
+        let rtlIndex = _rtlIndex >= 0 ? _rtlIndex : lastIndex
+        return rtlIndex
     }()
+
     open lazy private(set) var currentIndex = initialValueCurrentIndex {
         didSet {
             indexChanged()
