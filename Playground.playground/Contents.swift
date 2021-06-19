@@ -7,7 +7,11 @@
 
 //: Playground - noun: a place where people can play
 
-import UIKit
-import XLPagerTabStrip
+import Foundation
 
-var helloWorld = "Hello, playground"
+
+let queryItems = [URLQueryItem(name: "id", value: "1"), URLQueryItem(name: "id", value: "2")]
+var urlComps = URLComponents(string: "www.apple.com/help")!
+urlComps.queryItems = queryItems
+let result = urlComps.url!
+print(result)

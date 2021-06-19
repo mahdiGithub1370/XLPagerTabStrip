@@ -206,7 +206,7 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
             setColor(for: cell, index: index, currentIndex: currentIndex ?? self.currentIndex)
         }
     }
-    override func indexChanged() {
+    open override func indexChanged() {
         super.indexChanged()
         updateTitlesColor()
     }
