@@ -138,7 +138,7 @@ open class BaseButtonBarPagerTabStripViewController<ButtonBarCellType: UICollect
         buttonBarView.selectItem(at: IndexPath(item: currentIndex, section: 0), animated: false, scrollPosition: [])
     }
     
-    override func indexChanged() {
+    open override func indexChanged() {
         super.indexChanged()
         updateTitlesColor()
     }
