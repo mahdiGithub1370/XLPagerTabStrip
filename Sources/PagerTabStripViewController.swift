@@ -60,6 +60,14 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
 
     open private(set) var viewControllers = [UIViewController]()
     open var initialIndex: Int = 0
+    public var firstIndex: Int {
+        guard displayRTL else {
+            return 0
+        }
+        let _lastIndex = viewControllers.count - 1
+        let lastIndex = _lastIndex >= 0 ? _lastIndex : 0
+        return lastIndex
+    }
     private lazy var initialValueCurrentIndex: Int = {
         var initialIndex = self.initialIndex < 0 ? 0 : self.initialIndex
         let _lastIndex = viewControllers.count - 1
@@ -345,6 +353,10 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         }
     }
 
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        onIndexChangedClosure?(currentIndex)
+    }
+    
     // MARK: - Orientation
 
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
