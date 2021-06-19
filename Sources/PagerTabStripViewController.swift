@@ -68,6 +68,14 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         let lastIndex = _lastIndex >= 0 ? _lastIndex : 0
         return lastIndex
     }
+    public var secondIndex: Int {
+        guard displayRTL else {
+            let secondIndex = viewControllers.count >= 2 ? 1 : 0
+            return secondIndex
+        }
+        let secondIndex = viewControllers.count >= 2 ? firstIndex - 1 : 0
+        return secondIndex
+    }
     private lazy var initialValueCurrentIndex: Int = {
         var initialIndex = self.initialIndex < 0 ? 0 : self.initialIndex
         let _lastIndex = viewControllers.count - 1
