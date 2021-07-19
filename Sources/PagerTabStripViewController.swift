@@ -353,6 +353,10 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         }
     }
 
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        onIndexChangedClosure?(currentIndex)
+    }
+
     open func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         onIndexChangedClosure?(currentIndex)
         if containerView == scrollView {
