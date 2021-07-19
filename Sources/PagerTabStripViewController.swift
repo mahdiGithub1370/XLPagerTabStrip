@@ -354,15 +354,12 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
     }
 
     open func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        onIndexChangedClosure?(currentIndex)
         if containerView == scrollView {
             pagerTabStripChildViewControllersForScrolling = nil
             (navigationController?.view ?? view).isUserInteractionEnabled = true
             updateContent()
         }
-    }
-
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        onIndexChangedClosure?(currentIndex)
     }
     
     // MARK: - Orientation
