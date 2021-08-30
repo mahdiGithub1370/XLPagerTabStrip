@@ -229,6 +229,7 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
     }
     
     public override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        super.scrollViewDidEndDecelerating(scrollView)
         updateTitlesColor()
     }
     
