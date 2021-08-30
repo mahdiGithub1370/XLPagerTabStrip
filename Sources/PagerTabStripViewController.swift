@@ -94,6 +94,11 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
             indexChanged()
         }
     }
+    var currentIndexRTLSupport: Int {
+        let rtlIndex = (viewControllers.count - 1) - currentIndex
+        let index = displayRTL ? (rtlIndex > -1 ? rtlIndex : 0) : currentIndex
+        return index
+    }
     open func indexChanged() {}
     private var onIndexChangedClosure: ((Int)->())?
     public func onIndexChanged(_ completion: ((Int)->())?) {
@@ -353,16 +358,17 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
         }
     }
 
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        onIndexChangedClosure?(currentIndexRTLSupport)
+    }
+
     open func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        onIndexChangedClosure?(currentIndexRTLSupport)
         if containerView == scrollView {
             pagerTabStripChildViewControllersForScrolling = nil
             (navigationController?.view ?? view).isUserInteractionEnabled = true
             updateContent()
         }
-    }
-
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        onIndexChangedClosure?(currentIndex)
     }
     
     // MARK: - Orientation

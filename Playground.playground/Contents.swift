@@ -9,9 +9,7 @@
 
 import Foundation
 
+let str = "0.0.1"
 
-let queryItems = [URLQueryItem(name: "id", value: "1"), URLQueryItem(name: "id", value: "2")]
-var urlComps = URLComponents(string: "www.apple.com/help")!
-urlComps.queryItems = queryItems
-let result = urlComps.url!
-print(result)
+let asd = Float(str)!
+print(asd)
