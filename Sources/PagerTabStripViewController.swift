@@ -94,7 +94,7 @@ open class PagerTabStripViewController: UIViewController, UIScrollViewDelegate {
             indexChanged()
         }
     }
-    var currentIndexRTLSupport: Int {
+    open var currentIndexRTLSupport: Int {
         let rtlIndex = (viewControllers.count - 1) - currentIndex
         let index = displayRTL ? (rtlIndex > -1 ? rtlIndex : 0) : currentIndex
         return index
