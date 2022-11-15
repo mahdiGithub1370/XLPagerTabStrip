@@ -24,8 +24,12 @@
 
 import Foundation
 import UIKit
-
-class YoutubeIconCell: UICollectionViewCell {
+import XLPagerTabStrip
+class YoutubeIconCell: UICollectionViewCell,ButtonBarCellProtocol {
+    func getLabel() -> UILabel {
+        return UILabel()
+    }
+    
 
     @IBOutlet weak var iconImage: UIImageView!
 

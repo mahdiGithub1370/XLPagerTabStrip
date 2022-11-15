@@ -19,7 +19,7 @@
 		285DA2951C5A6A00000908CA /* YoutubeIconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285DA2941C5A6A00000908CA /* YoutubeIconCell.swift */; };
 		285DA2971C5A6A36000908CA /* YoutubeIconCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 285DA2961C5A6A36000908CA /* YoutubeIconCell.xib */; };
 		287D0A721C4B7877004566D6 /* ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287D0A711C4B7877004566D6 /* ExampleUITests.swift */; };
-		287D0A7D1C4B7B55004566D6 /* XLPagerTabStrip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 287D0A7A1C4B7B26004566D6 /* XLPagerTabStrip.framework */; };
+		287D0A7D1C4B7B55004566D6 /* XLPagerTabStrip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 287D0A7A1C4B7B26004566D6 /* XLPagerTabStrip.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		287D0A7E1C4B7B55004566D6 /* XLPagerTabStrip.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 287D0A7A1C4B7B26004566D6 /* XLPagerTabStrip.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		28F828D01C4B714D00330CF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F828CF1C4B714D00330CF4 /* AppDelegate.swift */; };
 		CB2125DE1C52A80E002DAF42 /* TwitterExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2125DD1C52A80E002DAF42 /* TwitterExampleViewController.swift */; };

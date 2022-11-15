@@ -53,7 +53,7 @@ class YoutubeExampleViewController: BaseButtonBarPagerTabStripViewController<You
         settings.style.buttonBarItemsShouldFillAvailableWidth = true
         settings.style.buttonBarLeftContentInset = 0
         settings.style.buttonBarRightContentInset = 0
-
+        
         changeCurrentIndexProgressive = { [weak self] (oldCell: YoutubeIconCell?, newCell: YoutubeIconCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
             oldCell?.iconImage.tintColor = self?.unselectedIconColor
@@ -94,3 +94,4 @@ class YoutubeExampleViewController: BaseButtonBarPagerTabStripViewController<You
         dismiss(animated: true, completion: nil)
     }
 }
+

@@ -60,6 +60,7 @@ public struct ButtonBarPagerTabStripSettings {
         public var buttonBarItemsShouldFillAvailableWidth = true
         // only used if button bar is created programaticaly and not using storyboards or nib files
         public var buttonBarHeight: CGFloat?
+        public var barViewWidth : CGFloat? = nil
     }
 
     public var style = Style()

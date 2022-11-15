@@ -38,6 +38,7 @@ open class BarView: UIView {
             }
         }
     }
+    var barWidth : CGFloat? = nil
     var selectedIndex = 0
 
     required public init?(coder aDecoder: NSCoder) {
@@ -53,9 +54,11 @@ open class BarView: UIView {
     // MARK: - Helpers
 
     private func updateSelectedBarPosition(with animation: Bool) {
+        let baseWidth = self.frame.size.width / CGFloat(optionsCount)
+        let barWidth = barWidth ?? self.frame.size.width / CGFloat(optionsCount)
         var frame = selectedBar.frame
-        frame.size.width = self.frame.size.width / CGFloat(optionsCount)
-        frame.origin.x = frame.size.width * CGFloat(selectedIndex)
+        frame.size.width = barWidth//self.frame.size.width / CGFloat(optionsCount)
+        frame.origin.x = (((baseWidth * CGFloat(selectedIndex))/2) -  (barWidth / 2))//frame.size.width * CGFloat(selectedIndex)
         if animation {
             UIView.animate(withDuration: 0.3, animations: { [weak self] in
                 self?.selectedBar.frame = frame
@@ -71,14 +74,20 @@ open class BarView: UIView {
     }
 
     open func move(fromIndex: Int, toIndex: Int, progressPercentage: CGFloat) {
+        
+        let baseWidth = self.frame.size.width / CGFloat(optionsCount)
+        let barWidth = barWidth ?? self.frame.size.width / CGFloat(optionsCount)
+        
+        
+        
         selectedIndex = (progressPercentage > 0.5) ? toIndex : fromIndex
 
         var newFrame = selectedBar.frame
-        newFrame.size.width = frame.size.width / CGFloat(optionsCount)
+        newFrame.size.width = barWidth//frame.size.width / CGFloat(optionsCount)
         var fromFrame = newFrame
-        fromFrame.origin.x = newFrame.size.width * CGFloat(fromIndex)
+        fromFrame.origin.x = (((baseWidth * CGFloat(fromIndex))/2) -  (barWidth / 2))//newFrame.size.width * CGFloat(fromIndex)
         var toFrame = newFrame
-        toFrame.origin.x = toFrame.size.width * CGFloat(toIndex)
+        toFrame.origin.x = (((baseWidth * CGFloat(toIndex))/2) -  (barWidth / 2))//toFrame.size.width * CGFloat(toIndex)
         var targetFrame = fromFrame
         targetFrame.origin.x += (toFrame.origin.x - targetFrame.origin.x) * CGFloat(progressPercentage)
         selectedBar.frame = targetFrame
