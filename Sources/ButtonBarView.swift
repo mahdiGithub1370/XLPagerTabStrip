@@ -105,8 +105,14 @@ open class ButtonBarView: UICollectionView {
         targetFrame.size.width += (toFrame.size.width - fromFrame.size.width) * progressPercentage
         targetFrame.origin.x += (toFrame.origin.x - fromFrame.origin.x) * progressPercentage
 
-        selectedBar.frame = CGRect(x: targetFrame.origin.x, y: selectedBar.frame.origin.y, width: targetFrame.size.width, height: selectedBar.frame.size.height)
+        let xOrigin =  self.selectedBarWidth == nil ? targetFrame.origin.x : targetFrame.origin.x +  (targetFrame.width / 2) - (self.selectedBarWidth ?? 0.0 / 2) + 20
+        selectedBar.frame = CGRect(
+            x: xOrigin,
+            y: selectedBar.frame.origin.y,
+            width: self.selectedBarWidth ?? targetFrame.size.width,
+            height: selectedBar.frame.size.height)
 
+        toFrame.origin.x = xOrigin
         var targetContentOffset: CGFloat = 0.0
         if contentSize.width > frame.size.width {
             let toContentOffset = contentOffsetForCell(withFrame: toFrame, andIndex: toIndex)
@@ -127,11 +133,11 @@ open class ButtonBarView: UICollectionView {
 
         updateContentOffset(animated: animated, pagerScroll: pagerScroll, toFrame: selectedCellFrame, toIndex: (selectedCellIndexPath as NSIndexPath).row)
 
-//        selectedBarFrame.size.width = selectedCellFrame.size.width
-//        selectedBarFrame.origin.x = selectedCellFrame.origin.x
+
+        let xOrigin =  self.selectedBarWidth == nil ? selectedCellFrame.origin.x : selectedCellFrame.origin.x + (selectedCellFrame.width / 2) - ((self.selectedBarWidth ?? selectedCellFrame.size.width) / 2)
 
         selectedBarFrame.size.width = self.selectedBarWidth ?? selectedCellFrame.size.width
-        selectedBarFrame.origin.x = selectedCellFrame.origin.x + (selectedCellFrame.origin.x / 2) - ((self.selectedBarWidth ?? selectedCellFrame.size.width) / 2)
+        selectedBarFrame.origin.x = xOrigin
         
         
         if animated {
