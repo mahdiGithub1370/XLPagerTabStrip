@@ -159,6 +159,7 @@ open class ButtonBarPagerTabStripViewController: PagerTabStripViewController, Pa
         buttonBarView.cornerRadius = settings.style.cornerRadius
         buttonBarView.selectedBarHeight = settings.style.selectedBarHeight
         buttonBarView.selectedBarVerticalAlignment = settings.style.selectedBarVerticalAlignment
+        buttonBarView.selectedBarWidth = settings.style.barViewWidth
 
         // register button bar item cell
         switch buttonBarItemSpec! {
