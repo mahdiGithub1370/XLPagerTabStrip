@@ -31,6 +31,7 @@ public struct BarPagerTabStripSettings {
         public var barBackgroundColor: UIColor?
         public var selectedBarBackgroundColor: UIColor?
         public var barHeight: CGFloat = 5 // barHeight is ony set up when the bar is created programatically and not using storyboards or xib files.
+        public var barWidth : CGFloat? = nil
     }
 
     public var style = Style()
@@ -74,12 +75,14 @@ open class BarPagerTabStripViewController: PagerTabStripViewController, PagerTab
             view.addSubview(barView)
         }
         barView.optionsCount = viewControllers.count
+        barView.barWidth = settings.style.barWidth
         barView.moveTo(index: currentIndex, animated: false)
     }
 
     open override func reloadPagerTabStripView() {
         super.reloadPagerTabStripView()
         barView.optionsCount = viewControllers.count
+        barView.barWidth = settings.style.barWidth
         if isViewLoaded {
             barView.moveTo(index: currentIndex, animated: false)
         }
